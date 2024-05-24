@@ -19,7 +19,7 @@ const TourDetails = () => {
 	const fetchTour = async () => {
 		try {
 			const response = await axios.get(
-				`https://server-travel-booking.onrender.com/tours/${id}`
+				`http://127.0.0.1:5000/products/${id}`
 			);
 			setTours(response.data);
 		} catch (error) {
@@ -30,14 +30,12 @@ const TourDetails = () => {
 
 	const {
 		photo,
-		title,
+		name,
 		desc,
 		price,
-		address,
 		reviews,
-		city,
-		distance,
-		maxGroupSize,
+		featured,
+		stock_quantity,
 	} = tour;
 
 	const totalRating = reviews?.reduce((acc, item) => acc + item.rating, 0);
@@ -71,7 +69,7 @@ const TourDetails = () => {
 				<img src={photo} alt="" />
 
 				<div className="tour__info">
-					<h2>{title}</h2>
+					<h2>{name}</h2>
 
 					<div className="d-flex align-items-center gap-5">
 						<span className="tour__rating d-flex items-center gap-1">
@@ -84,25 +82,18 @@ const TourDetails = () => {
 							)}
 						</span>
 
-						<span className="tour__address">
-							<i className="ri-map-pin-user-fill"></i> {address}
-						</span>
+						
 					</div>
 
 					<div className="tour__extra--details">
 						<span>
-							<i className="ri-map-pin-2-line"></i> {city}
+							<i className="ri-map-pin-2-line"></i> {featured}
 						</span>
 						<span>
-							<i className="ri-money-dollar-circle-line"></i> ${price} per/
-							person
+							<i className="ri-money-dollar-circle-line"></i> ${price} VND
 						</span>
-						<span>
-							<i className="ri-map-pin-time-line"></i> {distance} km
-						</span>
-						<span>
-							<i className="ri-group-line"></i> {maxGroupSize} people
-						</span>
+						
+					
 					</div>
 					<div className="tour__desc">
 						<h5>Description</h5>

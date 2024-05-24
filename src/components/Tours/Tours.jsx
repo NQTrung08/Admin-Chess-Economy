@@ -18,13 +18,11 @@ const Tours = () => {
 	const [modalAdd, setModalAdd] = useState(false); // State cho modal thêm tour
 	const [modalUpdate, setModalUpdate] = useState(false); // State cho modal cập nhật tour
 	const [formData, setFormData] = useState({
-		title: "",
-		city: "",
-		distance: "",
-		maxGroupSize: "",
+		name: "",
+		featured: "",
+		stock_quantity: "",
 		price: "",
 		desc: "",
-		address: "",
 		photo: "",
 	});
 
@@ -35,7 +33,7 @@ const Tours = () => {
 	const fetchTour = async () => {
 		try {
 			const response = await axios.get(
-				"https://server-travel-booking.onrender.com/tours"
+				"http://127.0.0.1:5000/products"
 			);
 			setTours(response.data);
 		} catch (error) {
@@ -47,7 +45,7 @@ const Tours = () => {
 	const handleUpdate = async (id) => {
 		try {
 			const response = await axios.get(
-				`https://server-travel-booking.onrender.com/tours/${id}`
+				`http://127.0.0.1:5000/products/${id}`
 			);
 			console.log(response.data);
 			setSelectedTour(response.data);
@@ -60,7 +58,7 @@ const Tours = () => {
 	const handleUpdateSubmit = async () => {
 		try {
 			await axios.put(
-				`https://server-travel-booking.onrender.com/tours/${selectedTour._id}`,
+				`http://127.0.0.1:5000/products/${selectedTour._id}`,
 				selectedTour
 			);
 			fetchTour();
@@ -82,7 +80,7 @@ const Tours = () => {
 	const handleDelete = async (id) => {
 		try {
 			await axios.delete(
-				`https://server-travel-booking.onrender.com/tours/${id}`
+				`http://127.0.0.1:5000/products/${id}`
 			);
 			fetchTour();
 		} catch (error) {
@@ -112,7 +110,7 @@ const Tours = () => {
 		e.preventDefault();
 		try {
 			await axios.post(
-				"https://server-travel-booking.onrender.com/tours",
+				"http://127.0.0.1:5000/products",
 				formData
 			);
 			fetchTour();
@@ -120,13 +118,11 @@ const Tours = () => {
 			// Reset form data after submit
 			console.log("Tour added successfully!"); // Log khi tour được thêm thành công
 			setFormData({
-				title: "",
-				city: "",
-				distance: "",
-				maxGroupSize: "",
+				name: "",
+				featured: "",
+				stock_quantity: "",
 				price: "",
 				desc: "",
-				address: "",
 				photo: "",
 			});
 		} catch (error) {
@@ -149,10 +145,9 @@ const Tours = () => {
 						<thead>
 							<tr>
 								<th>Photo</th>
-								<th>Title</th>
-								<th>City</th>
-								<th>Distance</th>
-								<th>MaxSize</th>
+								<th>Name</th>
+								<th>Featured</th>
+								<th>Stock Quantity</th>
 								<th>Price</th>
 								<th>Action</th>
 								<th></th>
@@ -164,10 +159,9 @@ const Tours = () => {
 									<td>
 										<img src={tour.photo} alt="" style={{ width: "100px" }} />
 									</td>
-									<td>{tour.title}</td>
-									<td>{tour.city}</td>
-									<td>{tour.distance}</td>
-									<td>{tour.maxGroupSize}</td>
+									<td>{tour.name}</td>
+									<td>{tour.featured}</td>
+									<td>{tour.stock_quantity}</td>
 									<td>{tour.price}</td>
 									<td>
 										<Button
@@ -199,50 +193,34 @@ const Tours = () => {
 						{selectedTour && (
 							<form>
 								<div className="form-group">
-									<label>Title</label>
+									<label>Name</label>
 									<input
 										type="text"
 										className="form-control"
-										value={selectedTour.title}
-										onChange={(e) => handleUpdateChange(e, "title")}
+										value={selectedTour.name}
+										onChange={(e) => handleUpdateChange(e, "name")}
 									/>
 								</div>
 								<div className="form-group">
-									<label>City</label>
+									<label>Featured</label>
 									<input
 										type="text"
 										className="form-control"
-										value={selectedTour.city}
-										onChange={(e) => handleUpdateChange(e, "city")}
+										value={selectedTour.featured}
+										onChange={(e) => handleUpdateChange(e, "feature")}
 									/>
 								</div>
+					
 								<div className="form-group">
-									<label>Address</label>
-									<input
-										type="text"
-										className="form-control"
-										value={selectedTour.address}
-										onChange={(e) => handleUpdateChange(e, "address")}
-									/>
-								</div>
-								<div className="form-group">
-									<label>Distance</label>
+									<label>Stock Quantity</label>
 									<input
 										type="number"
 										className="form-control"
-										value={selectedTour.distance}
-										onChange={(e) => handleUpdateChange(e, "distance")}
+										value={selectedTour.stock_quantity}
+										onChange={(e) => handleUpdateChange(e, "stock_quantity")}
 									/>
 								</div>
-								<div className="form-group">
-									<label>MaxGroupSize</label>
-									<input
-										type="number"
-										className="form-control"
-										value={selectedTour.maxGroupSize}
-										onChange={(e) => handleUpdateChange(e, "maxGroupSize")}
-									/>
-								</div>
+							
 								<div className="form-group">
 									<label>Description</label>
 									<input
@@ -291,50 +269,34 @@ const Tours = () => {
 						{/* Render form to add new tour */}
 						<form onSubmit={handleAddSubmit}>
 							<div className="form-group">
-								<label>Title</label>
+								<label>Name</label>
 								<input
 									type="text"
 									className="form-control"
-									value={formData.title}
-									onChange={(e) => handleAddChange(e, "title")}
+									value={formData.name}
+									onChange={(e) => handleAddChange(e, "name")}
 								/>
 							</div>
 							<div className="form-group">
-								<label>City</label>
+								<label>Featured</label>
 								<input
 									type="text"
 									className="form-control"
-									value={formData.city}
-									onChange={(e) => handleAddChange(e, "city")}
+									value={formData.featured}
+									onChange={(e) => handleAddChange(e, "featured")}
 								/>
 							</div>
+				
 							<div className="form-group">
-								<label>Address</label>
-								<input
-									type="text"
-									className="form-control"
-									value={formData.address}
-									onChange={(e) => handleAddChange(e, "address")}
-								/>
-							</div>
-							<div className="form-group">
-								<label>Distance</label>
+								<label>Stock Quantity</label>
 								<input
 									type="number"
 									className="form-control"
-									value={formData.distance}
-									onChange={(e) => handleAddChange(e, "distance")}
+									value={formData.stock_quantity}
+									onChange={(e) => handleAddChange(e, "stock_quantity")}
 								/>
 							</div>
-							<div className="form-group">
-								<label>Max Group Size</label>
-								<input
-									type="number"
-									className="form-control"
-									value={formData.maxGroupSize}
-									onChange={(e) => handleAddChange(e, "maxGroupSize")}
-								/>
-							</div>
+							
 							<div className="form-group">
 								<label>Description</label>
 								<input
