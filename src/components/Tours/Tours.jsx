@@ -36,6 +36,7 @@ const Tours = () => {
 				"http://127.0.0.1:5000/products"
 			);
 			setTours(response.data);
+			console.log(response.data);
 		} catch (error) {
 			console.error("Error fetching tours:", error);
 		}
@@ -149,13 +150,14 @@ const Tours = () => {
 								<th>Featured</th>
 								<th>Stock Quantity</th>
 								<th>Price</th>
+								<th>Discount</th>
 								<th>Action</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							{tours.map((tour) => (
-								<tr key={tour._id}>
+								<tr key={tour.id}>
 									<td>
 										<img src={tour.photo} alt="" style={{ width: "100px" }} />
 									</td>
@@ -163,22 +165,23 @@ const Tours = () => {
 									<td>{tour.featured}</td>
 									<td>{tour.stock_quantity}</td>
 									<td>{tour.price}</td>
+									<td>{tour.discount} %</td>
 									<td>
 										<Button
 											color="btn btn-success"
-											onClick={() => handleUpdate(tour._id)}
+											onClick={() => handleUpdate(tour.id)}
 										>
 											<i className="ri-pencil-fill"></i>
 										</Button>{" "}
 										<Button
 											color="btn btn-danger"
-											onClick={() => handleDelete(tour._id)}
+											onClick={() => handleDelete(tour.id)}
 										>
 											<i className="ri-delete-bin-6-line"></i>
 										</Button>
 									</td>
 									<td>
-										<Link to={`/tours/${tour._id}`}>Detail</Link>
+										<Link to={`/tours/${tour.id}`}>Detail</Link>
 									</td>
 								</tr>
 							))}
