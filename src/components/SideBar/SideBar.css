@@ -50,7 +50,7 @@
 .active__link{
     border-top-right-radius: 24px;
     border-bottom-right-radius: 24px;
-    background-color: pink;
+    background-color: rgba(136, 212, 136, 0.904);
 }
 .active__link::before {
     content: "";

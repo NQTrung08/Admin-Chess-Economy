@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Col, Row } from "reactstrap";
 import { NavLink, Link } from 'react-router-dom';
-import logo from "../../imgs/logoTravel.png";
+import logo from "../../imgs/chessAdmin.png";
 import "./SideBar.css";
 
 const nav_links = [
