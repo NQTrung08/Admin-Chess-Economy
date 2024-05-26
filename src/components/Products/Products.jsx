@@ -22,6 +22,7 @@ const Products = () => {
 		featured: "",
 		stock_quantity: "",
 		price: "",
+		discount: "",
 		description: "",
 		photo: "",
 	});
@@ -128,6 +129,7 @@ const Products = () => {
 				featured: "",
 				stock_quantity: "",
 				price: "",
+				discount: "",
 				description: "",
 				photo: "",
 			});
@@ -240,6 +242,17 @@ const Products = () => {
 								</div>
 
 								<div className="form-group">
+									<label>Discount</label>
+									<input
+										type="number"
+										className="form-control"
+										value={selectedTour.discount}
+										onChange={(e) => handleUpdateChange(e, "discount")}
+									/>
+								</div>
+
+
+								<div className="form-group">
 									<label>Featured</label>
 									<input
 										type="text"
@@ -324,6 +337,17 @@ const Products = () => {
 									onChange={(e) => handleAddChange(e, "price")}
 								/>
 							</div>
+
+							<div className="form-group">
+								<label>Discount</label>
+								<input
+									type="number"
+									className="form-control"
+									value={formData.discount}
+									onChange={(e) => handleAddChange(e, "discount")}
+								/>
+							</div>
+
 							<div className="form-group">
 								<label>Photo</label>
 								<input
