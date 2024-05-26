@@ -9,10 +9,10 @@ import {
 	ModalBody,
 	ModalFooter,
 } from "reactstrap";
-import "./Tours.css";
+import "./products.css";
 import axios from "axios";
 
-const Tours = () => {
+const Products = () => {
 	const [tours, setTours] = useState([]);
 	const [selectedTour, setSelectedTour] = useState(null);
 	const [modalAdd, setModalAdd] = useState(false); // State cho modal thêm tour
@@ -22,7 +22,7 @@ const Tours = () => {
 		featured: "",
 		stock_quantity: "",
 		price: "",
-		desc: "",
+		description: "",
 		photo: "",
 	});
 
@@ -46,7 +46,7 @@ const Tours = () => {
 	const handleUpdate = async (id) => {
 		try {
 			const response = await axios.get(
-				`http://127.0.0.1:5000/products/${id}`
+				`http://127.0.0.1:5000/product/${id}`
 			);
 			console.log(response.data);
 			setSelectedTour(response.data);
@@ -59,13 +59,13 @@ const Tours = () => {
 	const handleUpdateSubmit = async () => {
 		try {
 			await axios.put(
-				`http://127.0.0.1:5000/products/${selectedTour._id}`,
+				`http://127.0.0.1:5000/uproduct/${selectedTour.id}`,
 				selectedTour
 			);
 			fetchTour();
 			toggleModalUpdate();
 		} catch (error) {
-			console.error("Error updating tour:", error);
+			console.error("Error updating product:", error);
 		}
 	};
 
@@ -81,7 +81,7 @@ const Tours = () => {
 	const handleDelete = async (id) => {
 		try {
 			await axios.delete(
-				`http://127.0.0.1:5000/products/${id}`
+				`http://127.0.0.1:5000/dproduct/${id}`
 			);
 			fetchTour();
 		} catch (error) {
@@ -98,7 +98,7 @@ const Tours = () => {
 		setModalUpdate(!modalUpdate);
 	};
 
-	// ===================== HANDLE ADD TOUR =========================
+	// ===================== HANDLE ADD Product =========================
 
 	const handleAddChange = (e, field) => {
 		setFormData({
@@ -109,21 +109,26 @@ const Tours = () => {
 
 	const handleAddSubmit = async (e) => {
 		e.preventDefault();
+		if (!formData.name || !formData.price || !formData.stock_quantity) {
+			alert("Name, price, and stock quantity are required");
+			return;
+		}
 		try {
-			await axios.post(
-				"http://127.0.0.1:5000/products",
+			const reponse = await axios.post(
+				"http://127.0.0.1:5000/cproduct",
 				formData
 			);
 			fetchTour();
 			toggleModalAdd();
 			// Reset form data after submit
-			console.log("Tour added successfully!"); // Log khi tour được thêm thành công
+			console.log(reponse);
+			console.log("Product added successfully!"); // Log khi tour được thêm thành công
 			setFormData({
 				name: "",
 				featured: "",
 				stock_quantity: "",
 				price: "",
-				desc: "",
+				description: "",
 				photo: "",
 			});
 		} catch (error) {
@@ -135,7 +140,7 @@ const Tours = () => {
 	return (
 		<Col lg={9}>
 			<div className="tours__content">
-				<h3>Tours</h3>
+				<h3>Products</h3>
 				<div className="btn__tour--add">
 					<Button color="primary" onClick={toggleModalAdd}>
 						<i className="ri-add-line"></i>
@@ -181,7 +186,7 @@ const Tours = () => {
 										</Button>
 									</td>
 									<td>
-										<Link to={`/tours/${tour.id}`}>Detail</Link>
+										<Link to={`/products/${tour.id}`}>Detail</Link>
 									</td>
 								</tr>
 							))}
@@ -204,15 +209,6 @@ const Tours = () => {
 										onChange={(e) => handleUpdateChange(e, "name")}
 									/>
 								</div>
-								<div className="form-group">
-									<label>Featured</label>
-									<input
-										type="text"
-										className="form-control"
-										value={selectedTour.featured}
-										onChange={(e) => handleUpdateChange(e, "feature")}
-									/>
-								</div>
 					
 								<div className="form-group">
 									<label>Stock Quantity</label>
@@ -229,8 +225,8 @@ const Tours = () => {
 									<input
 										type="text"
 										className="form-control"
-										value={selectedTour.desc}
-										onChange={(e) => handleUpdateChange(e, "desc")}
+										value={selectedTour.description}
+										onChange={(e) => handleUpdateChange(e, "description")}
 									/>
 								</div>
 								<div className="form-group">
@@ -240,6 +236,16 @@ const Tours = () => {
 										className="form-control"
 										value={selectedTour.price}
 										onChange={(e) => handleUpdateChange(e, "price")}
+									/>
+								</div>
+
+								<div className="form-group">
+									<label>Featured</label>
+									<input
+										type="text"
+										className="form-control"
+										value={selectedTour.featured}
+										onChange={(e) => handleUpdateChange(e, "feature")}
 									/>
 								</div>
 
@@ -267,7 +273,7 @@ const Tours = () => {
 
 				{/* Modal for Add Tour */}
 				<Modal isOpen={modalAdd} toggle={toggleModalAdd}>
-					<ModalHeader toggle={toggleModalAdd}>Add Tour</ModalHeader>
+					<ModalHeader toggle={toggleModalAdd}>Add Product</ModalHeader>
 					<ModalBody>
 						{/* Render form to add new tour */}
 						<form onSubmit={handleAddSubmit}>
@@ -305,8 +311,8 @@ const Tours = () => {
 								<input
 									type="text"
 									className="form-control"
-									value={formData.desc}
-									onChange={(e) => handleAddChange(e, "desc")}
+									value={formData.description}
+									onChange={(e) => handleAddChange(e, "description")}
 								/>
 							</div>
 							<div className="form-group">
@@ -332,7 +338,7 @@ const Tours = () => {
 					</ModalBody>
 					<ModalFooter>
 					<Button type="submit" color="primary" onClick={handleAddSubmit}>
-								Add Tour
+								Add Product
 							</Button>{" "}
 						<Button color="secondary" onClick={toggleModalAdd}>
 							Cancel
@@ -344,4 +350,4 @@ const Tours = () => {
 	);
 };
 
-export default Tours;
+export default Products;

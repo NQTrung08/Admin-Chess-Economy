@@ -16,8 +16,8 @@ const nav_links = [
 		urlImg:"ri-group-line",
 	},
 	{
-		path: "/tours",
-		display: "Tours",
+		path: "/products",
+		display: "Products",
 		urlImg:"ri-map-pin-line",
 	},
 	{
